@@ -1,0 +1,2 @@
+1. Make two line gap between function and class definitions, but if a function is a method in a class, make one line gap.
+2. Make two line gap between imports and code.
