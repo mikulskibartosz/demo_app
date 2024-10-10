@@ -20,12 +20,14 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Setup Poetry
         run: curl -sSL https://install.python-poetry.org | python3 -
-      - name: Install dependencies
-        run: poetry install --no-interaction --no-cache
-      - name: Install tox in Poetry environment
-        run: poetry run pip install tox
-      - name: Run tox in Poetry environment
-        run: poetry run tox -e py
+      - name: Install dependencies into the user virtual environment
+        run: |
+          poetry config virtualenvs.create false
+          poetry install --no-interaction --no-ansi
+      - name: Install tox
+        run: pip install tox
+      - name: Run tox
+        run: tox -e py
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
