@@ -23,7 +23,8 @@ jobs:
       - name: Install dependencies into the user virtual environment
         run: |
           poetry config virtualenvs.create false
-          sudo poetry install --no-interaction --no-ansi
+          poetry lock --no-update
+          poetry install --no-interaction
       - name: Install tox
         run: pip install tox
       - name: Run tox
