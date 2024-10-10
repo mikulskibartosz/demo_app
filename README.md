@@ -1,4 +1,4 @@
-****# Expense Tracker API
+# Expense Tracker API
 
 This application is an Expense Tracker API built with Flask. It allows users to create, retrieve, and filter expenses. The API supports both JSON and CSV formats for data retrieval, making it versatile for various client needs.
 
