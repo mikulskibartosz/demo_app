@@ -69,62 +69,62 @@ def test_list_expenses_no_filter(mock_data, expense_service):
 
 
 def test_list_expenses_date_range_with_exact_date(mock_data, expense_service):
-    filter = ExpenseFilter(from_date=EXPENSE_DATE, to_date=EXPENSE_DATE)
-    expenses = expense_service.get_expenses_by_filter(filter)
+    expense_filter = ExpenseFilter(from_date=EXPENSE_DATE, to_date=EXPENSE_DATE)
+    expenses = expense_service.get_expenses_by_filter(expense_filter)
     assert len(expenses) == 3
 
 
 def test_list_expenses_date_range_with_start_date(mock_data, expense_service):
-    filter = ExpenseFilter(from_date=EXPENSE_DATE)
-    expenses = expense_service.get_expenses_by_filter(filter)
+    expense_filter = ExpenseFilter(from_date=EXPENSE_DATE)
+    expenses = expense_service.get_expenses_by_filter(expense_filter)
     assert len(expenses) == 3
 
 
 def test_list_expenses_date_range_with_end_date(mock_data, expense_service):
-    filter = ExpenseFilter(to_date=EXPENSE_DATE)
-    expenses = expense_service.get_expenses_by_filter(filter)
+    expense_filter = ExpenseFilter(to_date=EXPENSE_DATE)
+    expenses = expense_service.get_expenses_by_filter(expense_filter)
     assert len(expenses) == 3
 
 
 def test_list_expenses_date_range_with_empty_result_after_start_date(
     mock_data, expense_service
 ):
-    filter = ExpenseFilter(from_date=datetime(2023, 4, 16, tzinfo=timezone.utc))
-    expenses = expense_service.get_expenses_by_filter(filter)
+    expense_filter = ExpenseFilter(from_date=datetime(2023, 4, 16, tzinfo=timezone.utc))
+    expenses = expense_service.get_expenses_by_filter(expense_filter)
     assert len(expenses) == 0
 
 
 def test_list_expenses_date_range_with_empty_result_before_end_date(
     mock_data, expense_service
 ):
-    filter = ExpenseFilter(to_date=datetime(2023, 4, 14, tzinfo=timezone.utc))
-    expenses = expense_service.get_expenses_by_filter(filter)
+    expense_filter = ExpenseFilter(to_date=datetime(2023, 4, 14, tzinfo=timezone.utc))
+    expenses = expense_service.get_expenses_by_filter(expense_filter)
     assert len(expenses) == 0
 
 
 def test_list_expenses_category_filter(mock_data, expense_service):
-    filter = ExpenseFilter(category=Category.FOOD)
-    expenses = expense_service.get_expenses_by_filter(filter)
+    expense_filter = ExpenseFilter(category=Category.FOOD)
+    expenses = expense_service.get_expenses_by_filter(expense_filter)
     assert len(expenses) == 2
 
 
 def test_list_expenses_category_filter_with_empty_result(mock_data, expense_service):
-    filter = ExpenseFilter(category=Category.OTHER)
-    expenses = expense_service.get_expenses_by_filter(filter)
+    expense_filter = ExpenseFilter(category=Category.OTHER)
+    expenses = expense_service.get_expenses_by_filter(expense_filter)
     assert len(expenses) == 0
 
 
 def test_list_expenses_date_range_and_category_filter(mock_data, expense_service):
-    filter = ExpenseFilter(
+    expense_filter = ExpenseFilter(
         from_date=EXPENSE_DATE, to_date=EXPENSE_DATE, category=Category.TRANSPORT
     )
-    expenses = expense_service.get_expenses_by_filter(filter)
+    expenses = expense_service.get_expenses_by_filter(expense_filter)
     assert len(expenses) == 1
 
 
 def test_list_expenses_invalid_date_range(mock_data, expense_service):
-    filter = ExpenseFilter(
+    expense_filter = ExpenseFilter(
         from_date=EXPENSE_DATE, to_date=EXPENSE_DATE - timedelta(days=1)
     )
     with pytest.raises(ValueError):
-        expense_service.get_expenses_by_filter(filter)
+        expense_service.get_expenses_by_filter(expense_filter)
