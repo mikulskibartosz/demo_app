@@ -20,11 +20,10 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Setup Poetry
         run: curl -sSL https://install.python-poetry.org | python3 -
-      - name: Install dependencies into the user virtual environment
+      - name: Install dependencies
         run: |
-          poetry config virtualenvs.create false
-          poetry lock --no-update
-          poetry install --no-interaction
+          poetry export --dev -f requirements.txt --output requirements.txt --without-hashes
+          pip install -r requirements.txt
       - name: Install tox
         run: pip install tox
       - name: Run tox
