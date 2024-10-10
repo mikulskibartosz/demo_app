@@ -22,8 +22,10 @@ jobs:
         run: curl -sSL https://install.python-poetry.org | python3 -
       - name: Install dependencies
         run: poetry install --no-interaction --no-cache
-      - name: Run tests
-        run: poetry run pytest --cov=my_project --cov-report=xml --cov-config=tox.ini -
+      - name: Install tox in Poetry environment
+        run: poetry run pip install tox
+      - name: Run tox in Poetry environment
+        run: poetry run tox -e py
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
